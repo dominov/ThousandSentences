@@ -1,0 +1,31 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Páginas{% endblock %}
+{% block content %}
+    {% include 'sentence/includes/sentences_menu.html' %}
+    <main role="main">
+        <div class="container mb-4">
+            {% for sentence in sentence_list|dictsort:"id" reversed %}
+                <div class="row mt-3">
+                    <div class="col-md-9 mx-auto">
+                        <h2 class="mb-4">{{ sentence.topic }}</h2>
+                        <div>
+                            <div class="alert alert-info" role="alert">
+                                {{ sentence.phrase_english }}
+                            </div>
+
+                            <div class="alert alert-secondary" role="alert">
+                                {{ sentence.phrase_spanish }}
+                            </div>
+                            <p>
+                                <a href="{% url 'sentences:update' sentence.id %}">Edit</a>
+                                <a href="{% url 'sentences:delete' sentence.id %}" style="color: #721c24;">Delete</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+                {% include 'core/includes/pagination.html' %}
+        </div>
+    </main>
+{% endblock %}
